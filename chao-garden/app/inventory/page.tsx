@@ -1,72 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { useState } from "react";
 
-type Item = {
-  id: string;
-  item_name: string;
-  category: string;
-  quantity: number;
-};
-
-const itemEffects: Record<string, any> = {
-  Apple: { stamina: 2 },
-  Banana: { run: 1 },
-  Carrot: { fly: 2 },
-};
+const mockItems = [
+  { id: 1, name: "🍎 Apple", qty: 5 },
+  { id: 2, name: "🍌 Banana", qty: 3 },
+  { id: 3, name: "🥕 Carrot", qty: 2 },
+];
 
 export default function InventoryPage() {
-  const [tab, setTab] = useState("food");
-  const [items, setItems] = useState<Item[]>([]);
-
-  // TEMP selected chao
-  const activeChaoId = "YOUR_CHAO_ID";
-
-  async function fetchItems() {
-    const { data } = await supabase
-      .from("inventory")
-      .select("*")
-      .eq("category", tab);
-
-    if (data) setItems(data);
-  }
-
-  useEffect(() => {
-    fetchItems();
-  }, [tab]);
-
-  // ✅ PUT useItem HERE
-  async function useItem(item: Item) {
-    const effect = itemEffects[item.item_name];
-
-    if (!effect) return;
-    if (item.quantity <= 0) return;
-
-    // Update chao stats
-    await supabase.from("chaos").update(effect).eq("id", activeChaoId);
-
-    // Reduce quantity
-    await supabase
-      .from("inventory")
-      .update({
-        quantity: item.quantity - 1,
-      })
-      .eq("id", item.id);
-
-    fetchItems();
-  }
+  const [items] = useState(mockItems);
 
   return (
-    <div>
-      <h1>Inventory</h1>
+    <div className="p-6 max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-4">🎒 Inventory</h1>
 
-      {items.map((item) => (
-        <div key={item.id}>
-          {item.item_name} x{item.quantity}
-          <button onClick={() => useItem(item)}>Use</button>
-        </div>
-      ))}
+      <div className="grid grid-cols-2 gap-4">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="bg-white rounded-xl shadow p-4 flex flex-col items-center"
+          >
+            <div className="text-xl">{item.name}</div>
+
+            <p className="text-gray-500">x{item.qty}</p>
+
+            <button className="mt-2 bg-green-200 hover:bg-green-300 px-3 py-1 rounded-lg">
+              Use
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

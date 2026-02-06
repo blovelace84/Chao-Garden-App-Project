@@ -1,20 +1,28 @@
+import Link from "next/link";
+
 export default function GardenPage() {
   return (
-    <div className="h-screen flex flex-col">
-      <div className="border p-4 flex justify-between">
-        <div>Profile</div>
-        <div>Rings</div>
-        <div>Settings</div>
+    <div className="p-6 max-w-md mx-auto">
+      <h1 className="text-3xl font-bold text-center mb-4">🌱 Chao Garden</h1>
+
+      {/* Garden Card */}
+      <div className="bg-white rounded-2xl shadow-lg p-6 h-72 flex items-center justify-center">
+        <p className="text-gray-500">Your Chao are playing here 🐣</p>
       </div>
 
-      <div className="flex-1 border m-4 flex items-center justify-center">
-        Garden Area
-      </div>
+      {/* Buttons */}
+      <div className="grid grid-cols-2 gap-4 mt-6">
+        <Link href="/chao/1">
+          <button className="w-full bg-yellow-300 hover:bg-yellow-400 rounded-xl p-4 font-semibold shadow">
+            View Chao
+          </button>
+        </Link>
 
-      <div className="border p-4 flex justify-around">
-        <button className="border px-4 py-2">Feed</button>
-        <button className="border px-4 py-2">Pet</button>
-        <button className="border px-4 py-2">Play</button>
+        <Link href="/inventory">
+          <button className="w-full bg-pink-300 hover:bg-pink-400 rounded-xl p-4 font-semibold shadow">
+            Inventory
+          </button>
+        </Link>
       </div>
     </div>
   );
