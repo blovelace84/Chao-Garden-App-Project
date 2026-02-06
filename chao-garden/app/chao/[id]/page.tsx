@@ -1,41 +1,24 @@
+import Card from "@/app/components/ui/Card";
+import Button from "@/app/components/ui/Button";
+import StatBar from "@/app/components/ui/Statbar";
+
 export default function ChaoDetail() {
   return (
     <div className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold text-center mb-4">🐣 Your Chao</h1>
+      <Card>
+        <h2 className="text-xl font-bold text-center mb-4">🐣 My Chao</h2>
 
-      {/* Chao Card */}
-      <div className="bg-white rounded-2xl shadow p-6 text-center">
-        <div className="text-6xl mb-2">🐥</div>
+        <div className="text-6xl text-center mb-4">🐥</div>
 
-        <p className="text-gray-500 mb-4">Happy & energetic!</p>
+        <StatBar label="Swim" value={60} color="blue" />
+        <StatBar label="Fly" value={40} color="pink" />
+        <StatBar label="Run" value={75} color="yellow" />
 
-        {/* Stats */}
-        <div className="space-y-2 text-left">
-          <Stat label="Swim" value={60} />
-          <Stat label="Fly" value={40} />
-          <Stat label="Run" value={30} />
+        <div className="grid grid-cols-2 gap-3 mt-4">
+          <Button color="yellow">Feed</Button>
+          <Button color="blue">Pet</Button>
         </div>
-
-        {/* Actions */}
-        <div className="flex justify-center gap-3 mt-4">
-          <button className="bg-yellow-200 px-4 py-2 rounded-lg">Feed</button>
-          <button className="bg-blue-200 px-4 py-2 rounded-lg">Pet</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: number }) {
-  return (
-    <div>
-      <p className="text-sm">{label}</p>
-      <div className="bg-gray-200 rounded-full h-3">
-        <div
-          className="bg-green-400 h-3 rounded-full"
-          style={{ width: `${value}%` }}
-        />
-      </div>
+      </Card>
     </div>
   );
 }
